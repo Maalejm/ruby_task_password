@@ -3,6 +3,7 @@
   <head>
     <title>password_checking</title>
     <script>
+
       var field_number=1;
       var password="";
       function nextTextField(event)
@@ -10,20 +11,23 @@
         
         if (document.getElementById("pass_part"+field_number).value.length==4 && field_number<5)
           {
-              password = password + document.getElementById("pass_part"+field_number).value;
+             
               if (field_number<4)
               {
                 field_number=field_number+1;
                 document.getElementById("pass_part"+field_number).focus();
               }
           }
-
           // send Ajax query to the controller
-          if (document.getElementById("pass_part4").value.length==4)
+          if (document.getElementById("pass_part4").value.length==4 && document.getElementById("pass_part3").value.length==4 && document.getElementById("pass_part2").value.length==4 && document.getElementById("pass_part1").value.length==4)
             {
-               event.preventDefault();
-               
-              document.getElementById("password").value=password;
+              var a = document.getElementById("pass_part1").value;
+              var b = document.getElementById("pass_part2").value;
+              var c = document.getElementById("pass_part3").value;
+              var d=  document.getElementById("pass_part4").value;
+              document.getElementById("password").value=a+b+c+d;
+              password=document.getElementById("password").value;
+              alert (document.getElementById("password").value);
               $.ajax({
                   type: 'POST',
                   url: "/passwords/index",
@@ -50,10 +54,10 @@
     <%=  form_for :passwords, :url => {:controller => "passwords", :action => "index"}, :remote => true, :id=>"ajax_form" do %>
     <table  style="width: 230px; text-align: left; margin-top: 20%;margin-left: 40%; background-color: #C8C8C8">
     <tr>
-    <td><%=  text_field_tag :pass_part1, params[:pass_part1], :size=>"4", :maxlength=>"4", :onkeyup=>"nextTextField(event)"%></td>
-    <td><%=  text_field_tag :pass_part2, params[:pass_part2], :size=>"4", :maxlength=>"4", :onkeyup=>"nextTextField(event)"%></td>
-    <td><%=  text_field_tag :pass_part3, params[:pass_part3], :size=>"4", :maxlength=>"4", :onkeyup=>"nextTextField(event)"%></td>
-    <td><%=  text_field_tag :pass_part4, params[:pass_part4], :size=>"4", :maxlength=>"4", :onkeyup=>"nextTextField(event)"%></td>
+    <td><%=  password_field_tag :pass_part1, params[:pass_part1], :size=>"4", :maxlength=>"4", :onkeyup=>"nextTextField(event)"%></td>
+    <td><%=  password_field_tag :pass_part2, params[:pass_part2], :size=>"4", :maxlength=>"4", :onkeyup=>"nextTextField(event)"%></td>
+    <td><%=  password_field_tag :pass_part3, params[:pass_part3], :size=>"4", :maxlength=>"4", :onkeyup=>"nextTextField(event)"%></td>
+    <td><%=  password_field_tag :pass_part4, params[:pass_part4], :size=>"4", :maxlength=>"4", :onkeyup=>"nextTextField(event)"%></td>
     <td> <%= hidden_field_tag :password %> </td>
     <td width="20px" style="text-align: left"><div class="span2" id="image"/></td>
     </tr>
