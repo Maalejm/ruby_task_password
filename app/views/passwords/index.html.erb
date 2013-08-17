@@ -27,7 +27,6 @@
               var d=  document.getElementById("pass_part4").value;
               document.getElementById("password").value=a+b+c+d;
               password=document.getElementById("password").value;
-              alert (document.getElementById("password").value);
               $.ajax({
                   type: 'POST',
                   url: "/passwords/index",
